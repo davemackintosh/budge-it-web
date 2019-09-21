@@ -22,7 +22,7 @@ const webpackConfig = {
   entry: [resolve(src, "index.tsx")],
   output: {
     path: resolve(__dirname, "../dist/"),
-    filename: "app.js",
+    filename: "budge-it.js",
   },
   resolve: {
     alias,
@@ -31,6 +31,11 @@ const webpackConfig = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
