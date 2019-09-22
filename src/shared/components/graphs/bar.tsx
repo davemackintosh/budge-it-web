@@ -1,11 +1,10 @@
-import React, {SVGProps} from "react"
-import Axis from '@src/shared/components/graphs/axis'
+import React, { SVGProps } from "react"
+import Axis from "@src/shared/components/graphs/axis"
 
 export interface BarGraphPropsData {
-  x: number
-  y: number
+  x: number | Date
+  y: number | Date
   label?: string
-  value: number
 }
 
 export interface BarGraphProps extends SVGProps<any> {
@@ -15,17 +14,19 @@ export interface BarGraphProps extends SVGProps<any> {
 }
 
 const BarGraph = (props: BarGraphProps) => {
-  const {xLabel, yLabel, data, ...svgProps} = props
-  const Ys = data.map((row: BarGraphPropsData) => row.y)
+  const { xLabel, yLabel, data, ...svgProps } = props
+  const Ys = data.map((row: BarGraphPropsData) => row.y.valueOf())
   const maxY = Math.max(...Ys)
   const minY = Math.min(...Ys)
-  const Xs = data.map((row: BarGraphPropsData) => row.x)
+  const Xs = data.map((row: BarGraphPropsData) => row.x.valueOf())
   const maxX = Math.max(...Xs)
   const minX = Math.min(...Xs)
 
+  const width = 100 / props.data.length
+
   return (
     <svg {...svgProps}>
-      <Axis 
+      <Axis
         xLabel={props.xLabel}
         yLabel={props.yLabel}
         minX={minX}
@@ -33,9 +34,16 @@ const BarGraph = (props: BarGraphProps) => {
         minY={minY}
         maxY={maxY}
       />
-      <g className="bar">
-        <rect height="10" y="10" width="3"></rect>
-      </g>
+      {props.data.map((data, index) => (
+        <g className="bar" key={data.x.valueOf()}>
+          <rect
+            height={data.y.valueOf() / maxY + "%"}
+            x={index * width}
+            y="10"
+            width={width + "%"}
+          ></rect>
+        </g>
+      ))}
     </svg>
   )
 }

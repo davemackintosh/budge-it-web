@@ -6,7 +6,7 @@ const routes: RouteProps[] = [
     path: "/",
     exact: true,
     component: Home,
-  }
+  },
 ]
 
 export default routes
