@@ -1,6 +1,7 @@
 import React from "react"
 import BarGraph, { BarGraphPropsData } from "@src/shared/components/graphs/bar"
 import styled from "styled-components"
+import LineGraph from "@src/shared/components/graphs/line"
 
 const Grid = styled.div`
   display: grid;
@@ -8,7 +9,7 @@ const Grid = styled.div`
   grid-auto-flow: column;
 `
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const barGraphDetail: BarGraphPropsData[] = [
     {
       x: new Date(),
@@ -30,6 +31,13 @@ export default function Home() {
   return (
     <Grid>
       <BarGraph
+        xLabel="X Axis"
+        yLabel="Y Axis"
+        data={barGraphDetail}
+        width="100%"
+        height="100%"
+      />
+      <LineGraph
         xLabel="X Axis"
         yLabel="Y Axis"
         data={barGraphDetail}

@@ -10,6 +10,9 @@ const theme = {
     barGraph: {
       barBg: "#f2545b",
     },
+    lineGraph: {
+      lineColour: "#f2545b",
+    },
   },
 
   typography: {

@@ -15,7 +15,7 @@ export interface BarGraphProps extends SVGProps<any> {
   barMargin?: number
 }
 
-const BarGraph = (props: BarGraphProps) => {
+const BarGraph = (props: BarGraphProps): JSX.Element => {
   const { xLabel, yLabel, data, ...svgProps } = props
   const Ys = data.map((row: BarGraphPropsData) => row.y.valueOf())
   const maxY = Math.max(...Ys)
@@ -27,8 +27,8 @@ const BarGraph = (props: BarGraphProps) => {
   return (
     <svg {...svgProps}>
       <Axis
-        xLabel={props.xLabel}
-        yLabel={props.yLabel}
+        xLabel={xLabel}
+        yLabel={yLabel}
         minX={minX}
         maxX={maxX}
         minY={minY}
