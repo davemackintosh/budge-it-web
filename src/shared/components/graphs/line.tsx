@@ -23,12 +23,15 @@ const LineGraph = (props: BarGraphProps): JSX.Element => {
   const maxX = Math.max(...Xs)
   const minX = Math.min(...Xs)
 
-  const svgRef = React.createRef<SVGSVGElement>()
   const [svgHeight, setSvgHeight] = useState(0)
+
+  const setSVGRef = (svg: SVGSVGElement): void => {
+    if (svgHeight === 0) setSvgHeight(svg.getBBox().height)
+  }
 
   const points = props.data.map((data, index) => {
     const height =
-      data.y.valueOf() === maxY ? 100 : (data.y.valueOf() / maxY) * 100
+      data.y.valueOf() === maxY ? 100 : (data.y.valueOf() / svgHeight) * 100
     const width = 100 / props.data.length
     const x = index * width
 
@@ -37,7 +40,7 @@ const LineGraph = (props: BarGraphProps): JSX.Element => {
   const linePoints = points.map((args: number[]): string => args.join(","))
 
   return (
-    <svg {...svgProps} ref={svgRef}>
+    <svg {...svgProps} ref={setSVGRef}>
       <Axis
         xLabel={xLabel}
         yLabel={yLabel}
