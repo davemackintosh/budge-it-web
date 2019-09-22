@@ -18,7 +18,7 @@ const BarGraph = (props: BarGraphProps) => {
   const Ys = data.map((row: BarGraphPropsData) => row.y.valueOf())
   const maxY = Math.max(...Ys)
   const minY = Math.min(...Ys)
-  const Xs = data.map((row: BarGraphPropsData) => row.x.valueOf())
+  const Xs = data.map((row: BarGraphPropsData) => row.x.valueOf()).sort()
   const maxX = Math.max(...Xs)
   const minX = Math.min(...Xs)
 
@@ -34,16 +34,21 @@ const BarGraph = (props: BarGraphProps) => {
         minY={minY}
         maxY={maxY}
       />
-      {props.data.map((data, index) => (
-        <g className="bar" key={data.x.valueOf()}>
+      {props.data.map((data, index) => {
+        const height =
+          data.y.valueOf() === maxY ? 100 : (data.y.valueOf() / maxY) * 100
+
+        return (
           <rect
-            height={data.y.valueOf() / maxY + "%"}
+            className="bar"
+            key={data.x.valueOf()}
             x={index * width}
-            y="10"
+            y={100 - height + "%"}
             width={width + "%"}
-          ></rect>
-        </g>
-      ))}
+            height={height + "%"}
+          />
+        )
+      })}
     </svg>
   )
 }
