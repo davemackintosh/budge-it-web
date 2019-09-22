@@ -6,6 +6,10 @@ const theme = {
     fontUnimportant: "#7f7b76",
     fontCta: "#4f93ce",
     fontAttention: "#e82ea7",
+
+    barGraph: {
+      barBg: "#f2545b",
+    },
   },
 
   typography: {
