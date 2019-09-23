@@ -52,13 +52,13 @@ class LineGraph extends Component<LineGraphProps, BarGraphState> {
       }
     }
 
+    const baseWidth = this.state.svgWidth / this.props.data.length
     const points = this.props.data.map((data, index) => {
-      const height = data.y.valueOf() === maxY ? 100 : data.y.valueOf() / maxY
-      const width = 100 / this.props.data.length
-      const x = (index * width) / 100
+      const normalisedHeight = (data.y.valueOf() - minY) / (maxY - minY)
+      const x = index * baseWidth
 
       // Flip the Y coords because this aint cartesion.
-      return [this.state.svgWidth * x, this.state.svgHeight - height]
+      return [x, this.state.svgHeight - this.state.svgHeight * normalisedHeight]
     })
     const linePoints = points.map((args: number[]): string => args.join(","))
 
