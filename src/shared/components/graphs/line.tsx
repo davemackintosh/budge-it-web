@@ -16,6 +16,7 @@ export interface LineGraphProps extends SVGProps<any> {
 
 export interface BarGraphState {
   svgHeight: number
+  svgWidth: number
 }
 
 class LineGraph extends Component<LineGraphProps, BarGraphState> {
@@ -26,6 +27,7 @@ class LineGraph extends Component<LineGraphProps, BarGraphState> {
 
   state = {
     svgHeight: 0,
+    svgWidth: 0,
   }
 
   private didUpdateSvgHeight = false
@@ -41,22 +43,22 @@ class LineGraph extends Component<LineGraphProps, BarGraphState> {
 
     const setSVGRef = (svg: SVGSVGElement): void => {
       if (!this.didUpdateSvgHeight) {
+        const box = svg.getBoundingClientRect()
         this.setState({
-          svgHeight: svg.getBBox().height,
+          svgHeight: box.height,
+          svgWidth: box.width,
         })
         this.didUpdateSvgHeight = true
       }
     }
 
     const points = this.props.data.map((data, index) => {
-      const height =
-        data.y.valueOf() === maxY
-          ? 100
-          : (data.y.valueOf() / this.state.svgHeight) * 100
+      const height = data.y.valueOf() === maxY ? 100 : data.y.valueOf() / maxY
       const width = 100 / this.props.data.length
-      const x = index * width
+      const x = (index * width) / 100
 
-      return [x, height]
+      // Flip the Y coords because this aint cartesion.
+      return [this.state.svgWidth * x, this.state.svgHeight - height]
     })
     const linePoints = points.map((args: number[]): string => args.join(","))
 
