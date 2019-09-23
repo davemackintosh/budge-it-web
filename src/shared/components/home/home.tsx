@@ -2,6 +2,8 @@ import React from "react"
 import BarGraph, { BarGraphPropsData } from "@src/shared/components/graphs/bar"
 import styled from "styled-components"
 import LineGraph from "@src/shared/components/graphs/line"
+import Graph from "@src/shared/components/graphs/graph-container"
+import { GraphPropsData } from "types/graph"
 
 const Grid = styled.div`
   display: grid;
@@ -30,13 +32,23 @@ export default function Home(): JSX.Element {
 
   return (
     <Grid>
-      <BarGraph
+      <Graph
         xLabel="X Axis"
         yLabel="Y Axis"
+        SVGProps={{
+          width: "100%",
+          height: "100%",
+        }}
         data={barGraphDetail}
-        width="100%"
-        height="100%"
-      />
+      >
+        {(
+          SVGWidth: number,
+          SVGHeight: number,
+          data: GraphPropsData[],
+        ): JSX.Element => (
+          <BarGraph svgWidth={SVGWidth} svgHeight={SVGHeight} data={data} />
+        )}
+      </Graph>
       <LineGraph
         xLabel="X Axis"
         yLabel="Y Axis"

@@ -14,23 +14,11 @@ export interface LineGraphProps extends SVGProps<any> {
   yLabel: string
 }
 
-export interface BarGraphState {
-  svgHeight: number
-  svgWidth: number
-}
-
-class LineGraph extends Component<LineGraphProps, BarGraphState> {
+class LineGraph extends Component<LineGraphProps> {
   static defaultProps = {
     data: [],
     barMargin: 5,
   }
-
-  state = {
-    svgHeight: 0,
-    svgWidth: 0,
-  }
-
-  private didUpdateSvgHeight = false
 
   render(): JSX.Element {
     const { xLabel, yLabel, data, ...svgProps } = this.props
@@ -40,17 +28,6 @@ class LineGraph extends Component<LineGraphProps, BarGraphState> {
     const Xs = data.map((row: LineGraphPropsData) => row.x.valueOf()).sort()
     const maxX = Math.max(...Xs)
     const minX = Math.min(...Xs)
-
-    const setSVGRef = (svg: SVGSVGElement): void => {
-      if (!this.didUpdateSvgHeight) {
-        const box = svg.getBoundingClientRect()
-        this.setState({
-          svgHeight: box.height,
-          svgWidth: box.width,
-        })
-        this.didUpdateSvgHeight = true
-      }
-    }
 
     const baseWidth = this.state.svgWidth / this.props.data.length
     const points = this.props.data.map((data, index) => {
