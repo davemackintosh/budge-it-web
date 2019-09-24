@@ -1,5 +1,4 @@
 import React, { SVGProps, Component } from "react"
-import Axis from "@src/shared/components/graphs/axis"
 import { LineGraphLine, LineGraphPoint } from "@src/shared/theme/graphs/line"
 
 export interface LineGraphPropsData {
@@ -21,13 +20,7 @@ class LineGraph extends Component<LineGraphProps> {
   }
 
   render(): JSX.Element {
-    const { xLabel, yLabel, data, ...svgProps } = this.props
-    const Ys = data.map((row: LineGraphPropsData) => row.y.valueOf())
-    const maxY = Math.max(...Ys)
-    const minY = Math.min(...Ys)
-    const Xs = data.map((row: LineGraphPropsData) => row.x.valueOf()).sort()
-    const maxX = Math.max(...Xs)
-    const minX = Math.min(...Xs)
+    const {xLabel, yLabel, data} = this.props
 
     const baseWidth = this.state.svgWidth / this.props.data.length
     const points = this.props.data.map((data, index) => {
@@ -40,15 +33,6 @@ class LineGraph extends Component<LineGraphProps> {
     const linePoints = points.map((args: number[]): string => args.join(","))
 
     return (
-      <svg {...svgProps} ref={setSVGRef}>
-        <Axis
-          xLabel={xLabel}
-          yLabel={yLabel}
-          minX={minX}
-          maxX={maxX}
-          minY={minY}
-          maxY={maxY}
-        />
         <LineGraphLine
           className="line"
           x={0}
@@ -63,7 +47,6 @@ class LineGraph extends Component<LineGraphProps> {
             cy={points[1]}
           />
         ))}
-      </svg>
     )
   }
 }

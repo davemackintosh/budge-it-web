@@ -1,7 +1,11 @@
-import React from "react"
+import React, { Fragment } from "react"
 
 function Home() {
-  return <h1>Budge It</h1>
+  return (
+    <Fragment>
+      <h1>Budge It</h1>
+    </Fragment>
+  )
 }
 
 export default Home

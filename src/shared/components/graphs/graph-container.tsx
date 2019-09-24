@@ -11,6 +11,8 @@ interface GraphProps {
   ) => JSX.Element | JSX.Element[]
   data: GraphPropsData[]
   SVGProps?: SVGProps<any>
+  xLabel: string
+  yLabel: string
 }
 
 interface GraphState {
@@ -56,12 +58,12 @@ class Graph extends Component<GraphProps, GraphState> {
     return (
       <svg {...this.props.SVGProps} ref={this.setSVGRef.bind(this)}>
         <Axis
-          xLabel={xLabel}
-          yLabel={yLabel}
-          minX={minX}
-          maxX={maxX}
-          minY={minY}
-          maxY={maxY}
+          xLabel={this.props.xLabel}
+          yLabel={this.props.yLabel}
+          minX={this.minX}
+          maxX={this.maxX}
+          minY={this.minY}
+          maxY={this.maxY}
         />
         {this.props.children(
           this.state.svgWidth,

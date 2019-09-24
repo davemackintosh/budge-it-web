@@ -1,9 +1,15 @@
 import React, { Fragment } from "react"
 import NavDrawer from "@src/shared/components/nav"
 
-const Layout = props => (
+interface LayoutProps {
+  children?: JSX.Element | JSX.Element[]
+}
+
+const Layout = (props: LayoutProps): JSX.Element => (
   <Fragment>
     <NavDrawer />
     <main>{props.children}</main>
   </Fragment>
 )
+
+export default Layout
