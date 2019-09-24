@@ -1,9 +1,7 @@
-import React, { Component } from "react"
+import React from "react"
 
-interface HomeProps {}
-
-class Home extends Component<HomeProps> {
-  public render() {}
+function Home() {
+  return <h1>Budge It</h1>
 }
 
 export default Home
