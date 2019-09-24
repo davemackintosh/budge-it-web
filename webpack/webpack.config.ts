@@ -35,7 +35,7 @@ const webpackConfig = {
         test: /\.tsx?$/,
         enforce: "pre",
         exclude: /node_modules/,
-        loader: 'eslint-loader',
+        loader: "eslint-loader",
       },
       {
         test: /\.(ts|tsx)$/,
@@ -53,6 +53,8 @@ const webpackConfig = {
     new DefinePlugin({
       "process.platform": JSON.stringify(process.platform),
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      "process.env.GRAPHS_TOTAL_FF": true,
+      "process.env.MONTHLY_BREAKDOWN_FF": true,
     }),
     ...extraConfig.plugins,
   ],
