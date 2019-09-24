@@ -1,6 +1,7 @@
-import React, { SVGProps } from "react"
+import React, { Fragment } from "react"
 import Axis from "@src/shared/components/graphs/axis"
 import { BarGraphBar } from "@src/shared/theme/graphs/bar"
+import { GraphComponentProps } from "@src/shared/components/graphs/graph-container"
 
 export interface BarGraphPropsData {
   x: number | Date
@@ -8,40 +9,18 @@ export interface BarGraphPropsData {
   label?: string
 }
 
-export interface BarGraphProps extends SVGProps<any> {
-  data: BarGraphPropsData[]
-  xLabel: string
-  yLabel: string
-  barMargin?: number
-}
+export type BarGraphProps = GraphComponentProps
 
 const BarGraph = (props: BarGraphProps): JSX.Element => {
-  const { xLabel, yLabel, data, ...svgProps } = props
-  const Ys = data.map((row: BarGraphPropsData) => row.y.valueOf())
-  const maxY = Math.max(...Ys)
-  const minY = Math.min(...Ys)
-  const Xs = data.map((row: BarGraphPropsData) => row.x.valueOf()).sort()
-  const maxX = Math.max(...Xs)
-  const minX = Math.min(...Xs)
+  const { data, minX, minY, maxX, maxY } = props
 
   return (
-    <svg {...svgProps}>
-      <Axis
-        xLabel={xLabel}
-        yLabel={yLabel}
-        minX={minX}
-        maxX={maxX}
-        minY={minY}
-        maxY={maxY}
-      />
-      {props.data.map((data, index) => {
+    <Fragment>
+      {data.map((data, index) => {
         const height =
           data.y.valueOf() === maxY ? 100 : (data.y.valueOf() / maxY) * 100
-        const width =
-          100 / props.data.length -
-          (props.barMargin !== undefined ? props.barMargin : 5)
-        const margin =
-          index === 0 ? 0 : props.barMargin !== undefined ? props.barMargin : 5
+        const margin = 5
+        const width = 100 / props.data.length - margin
 
         return (
           <BarGraphBar
@@ -54,7 +33,7 @@ const BarGraph = (props: BarGraphProps): JSX.Element => {
           />
         )
       })}
-    </svg>
+    </Fragment>
   )
 }
 

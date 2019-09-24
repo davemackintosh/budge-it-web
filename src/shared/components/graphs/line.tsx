@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { LineGraphLine, LineGraphPoint } from "@src/shared/theme/graphs/line"
 import { GraphComponentProps } from "@src/shared/components/graphs/graph-container"
+import { normalise } from "@src/shared/utils"
 
 export interface LineGraphPropsData {
   x: number | Date
@@ -20,7 +21,7 @@ class LineGraph extends Component<LineGraphProps> {
 
     const baseWidth = svgWidth / data.length
     const points = data.map((data, index) => {
-      const normalisedHeight = (data.y.valueOf() - minY) / (maxY - minY)
+      const normalisedHeight = normalise(data.y.valueOf(), minY, maxY)
       const x = index * baseWidth
 
       // Flip the Y coords because this aint cartesion.
