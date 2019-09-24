@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { withRouter, RouteComponentProps } from "react-router"
+import { RouteComponentProps } from "react-router"
 
 type ReportBaseProps = RouteComponentProps<{ report: string }>
 
@@ -28,4 +28,4 @@ class ReportBase extends Component<ReportBaseProps> {
   }
 }
 
-export default withRouter(ReportBase)
+export default ReportBase

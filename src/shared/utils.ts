@@ -10,10 +10,7 @@ const memoCache: Record<string, any> = {}
  * @param {Function} callback to wrap.
  * @return {ReturnType}
  */
-export function memo<
-  ReturnType,
-  CallbackSignature extends Function = () => void
->(callback: CallbackSignature) {
+export function memo<ReturnType>(callback: Function) {
   return (...args: any[]): ReturnType => {
     const key = JSON.stringify(args)
 

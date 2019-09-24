@@ -13,6 +13,7 @@ export const NavDrawer = (): JSX.Element => {
       <Link
         to="/reports"
         title="See what financial reports we have to offer to better understand your spending"
+        onClick={(): void => setHoverState(true)}
         onMouseEnter={(): void => setHoverState(true)}
         onMouseLeave={(): void => setHoverState(false)}
       >

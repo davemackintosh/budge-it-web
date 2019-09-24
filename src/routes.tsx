@@ -3,6 +3,7 @@ import { RouteProps } from "react-router"
 import Home from "@src/shared/pages/home"
 import Reports from "@src/shared/pages/reports"
 import Layout from "@src/layout"
+import ReportPage from "@src/shared/pages/report"
 
 const routes: RouteProps[] = [
   {
@@ -33,7 +34,7 @@ const routes: RouteProps[] = [
     render: function ReportsComponentRoute(): JSX.Element {
       return (
         <Layout>
-          <Reports />
+          <ReportPage />
         </Layout>
       )
     },

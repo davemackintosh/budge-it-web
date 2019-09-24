@@ -6,6 +6,7 @@ import Graph, {
 import { CSVConsumer } from "@src/shared/contexts/csv"
 import BarGraph from "@src/shared/components/graphs/bar"
 import { GraphPropsData } from "types/graph"
+import { withRouter } from "react-router"
 
 class TotalsReport extends ReportBase {
   renderGraph(): JSX.Element {
@@ -21,4 +22,4 @@ class TotalsReport extends ReportBase {
   }
 }
 
-export default TotalsReport
+export default withRouter(TotalsReport)
