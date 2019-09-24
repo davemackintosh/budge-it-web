@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { withRouter, RouteComponentProps } from "react-router"
 
-type GraphPageProps = RouteComponentProps<{ graph: string }>
+type ReportPageProps = RouteComponentProps<{ report: string }>
 
-class GraphPage extends Component<GraphPageProps> {
+class ReportPage extends Component<ReportPageProps> {
   public renderGraph(): JSX.Element | null {
     console.error(
       "You should not consume this class directly, extend it and override the render functions.",
@@ -28,4 +28,4 @@ class GraphPage extends Component<GraphPageProps> {
   }
 }
 
-export default withRouter(GraphPage)
+export default withRouter(ReportPage)

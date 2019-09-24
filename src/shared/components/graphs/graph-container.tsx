@@ -2,13 +2,19 @@ import React, { Component, SVGProps } from "react"
 import Axis from "@src/shared/components/graphs/axis"
 import { GraphPropsData } from "types/graph"
 
+export interface GraphComponentProps {
+  svgWidth: number
+  svgHeight: number
+  data: GraphPropsData[]
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+}
+
 interface GraphProps {
   padding?: number
-  children: (
-    SVGWidth: number,
-    SVGHeight: number,
-    data: GraphPropsData[],
-  ) => JSX.Element | JSX.Element[]
+  children: (args: GraphComponentProps) => JSX.Element | JSX.Element[]
   data: GraphPropsData[]
   SVGProps?: SVGProps<any>
   xLabel: string
@@ -65,11 +71,15 @@ class Graph extends Component<GraphProps, GraphState> {
           minY={this.minY}
           maxY={this.maxY}
         />
-        {this.props.children(
-          this.state.svgWidth,
-          this.state.svgHeight,
-          this.props.data,
-        )}
+        {this.props.children({
+          svgWidth: this.state.svgWidth,
+          svgHeight: this.state.svgHeight,
+          data: this.props.data,
+          minY: this.minY,
+          minX: this.minX,
+          maxY: this.maxY,
+          maxX: this.maxX,
+        })}
       </svg>
     )
   }

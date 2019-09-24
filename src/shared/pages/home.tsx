@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 
-function Home() {
+function Home(): JSX.Element {
   return (
     <Fragment>
       <h1>Budge It</h1>

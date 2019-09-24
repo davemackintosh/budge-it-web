@@ -5,4 +5,3 @@ function Reports(): JSX.Element {
 }
 
 export default Reports
-

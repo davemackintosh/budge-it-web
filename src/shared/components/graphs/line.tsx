@@ -1,5 +1,6 @@
-import React, { SVGProps, Component } from "react"
+import React, { Component, Fragment } from "react"
 import { LineGraphLine, LineGraphPoint } from "@src/shared/theme/graphs/line"
+import { GraphComponentProps } from "@src/shared/components/graphs/graph-container"
 
 export interface LineGraphPropsData {
   x: number | Date
@@ -7,32 +8,28 @@ export interface LineGraphPropsData {
   label?: string
 }
 
-export interface LineGraphProps extends SVGProps<any> {
-  data: LineGraphPropsData[]
-  xLabel: string
-  yLabel: string
-}
+export type LineGraphProps = GraphComponentProps
 
 class LineGraph extends Component<LineGraphProps> {
   static defaultProps = {
     data: [],
-    barMargin: 5,
   }
 
   render(): JSX.Element {
-    const {xLabel, yLabel, data} = this.props
+    const { svgWidth, svgHeight, minY, maxY, data } = this.props
 
-    const baseWidth = this.state.svgWidth / this.props.data.length
-    const points = this.props.data.map((data, index) => {
+    const baseWidth = svgWidth / data.length
+    const points = data.map((data, index) => {
       const normalisedHeight = (data.y.valueOf() - minY) / (maxY - minY)
       const x = index * baseWidth
 
       // Flip the Y coords because this aint cartesion.
-      return [x, this.state.svgHeight - this.state.svgHeight * normalisedHeight]
+      return [x, svgHeight - svgHeight * normalisedHeight]
     })
     const linePoints = points.map((args: number[]): string => args.join(","))
 
     return (
+      <Fragment>
         <LineGraphLine
           className="line"
           x={0}
@@ -47,6 +44,7 @@ class LineGraph extends Component<LineGraphProps> {
             cy={points[1]}
           />
         ))}
+      </Fragment>
     )
   }
 }

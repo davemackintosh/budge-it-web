@@ -19,7 +19,18 @@ const routes: RouteProps[] = [
   {
     path: "/reports",
     exact: true,
-    render: function HomeRoute(): JSX.Element {
+    render: function ReportsRoute(): JSX.Element {
+      return (
+        <Layout>
+          <Reports />
+        </Layout>
+      )
+    },
+  },
+  {
+    path: "/reports/:report",
+    exact: true,
+    render: function ReportsComponentRoute(): JSX.Element {
       return (
         <Layout>
           <Reports />

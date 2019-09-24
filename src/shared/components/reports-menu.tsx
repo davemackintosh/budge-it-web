@@ -25,9 +25,6 @@ export const ReportsMenu = (): JSX.Element => {
         Monthly Breakdown
       </Link>,
     )
-  return (
-    <ReportsMenuUl>
-      {features.map((feature: JSX.Element) => feature)}
-    </ReportsMenuUl>
-  )
+  const items = features.map((feature: JSX.Element): JSX.Element => feature)
+  return <ReportsMenuUl>{items}</ReportsMenuUl>
 }

@@ -6,4 +6,3 @@ export const FeatureFlagContext = React.createContext({
 })
 export const FeatureFlagProvider = FeatureFlagContext.Provider
 export const FeatureFlagConsumer = FeatureFlagContext.Consumer
-
