@@ -7,4 +7,3 @@ export interface ParsedCsvEntry {
   description: string
   difference: number
 }
-

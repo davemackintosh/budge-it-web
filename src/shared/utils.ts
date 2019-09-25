@@ -1,4 +1,4 @@
-import { ParsedCsvEntry } from "types/csv"
+import { ParsedCsvEntry, PostType } from "types/csv"
 import { useContext } from "react"
 import { BankContext } from "@src/shared/contexts/bank"
 
@@ -102,10 +102,10 @@ export async function parseCsvFile(csvFile: File): Promise<ParsedCsvEntry[]> {
           }
           return entries
         })
-        .then((entries: string[][]): ParsedEntry[] =>
+        .then((entries: string[][]): ParsedCsvEntry[] =>
           entries.map(
-            (entry: string[]): ParsedEntry => {
-              const baseEntry: ParsedEntry = {
+            (entry: string[]): ParsedCsvEntry => {
+              const baseEntry: ParsedCsvEntry = {
                 date: new Date(entry[indexer.date]),
                 type: entry[indexer.type] as PostType,
                 description: entry[indexer.description],
@@ -146,8 +146,6 @@ export async function parseCsvFile(csvFile: File): Promise<ParsedCsvEntry[]> {
         .then(resolve)
         .catch(reject)
     }
-
-    fileReader.onerror = (error: Error) => reject(error)
 
     fileReader.readAsText(csvFile)
   })
