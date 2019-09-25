@@ -1,3 +1,7 @@
+import { ParsedCsvEntry } from "types/csv"
+import { useContext } from "react"
+import { BankContext } from "@src/shared/contexts/bank"
+
 const memoCache: Record<string, any> = {}
 
 /**
@@ -34,4 +38,117 @@ export const normalise = memo<number>(
     (value - min) / (max - min),
 )
 
-export function parseCsvFile(csvFile: File) {}
+export async function parseCsvFile(csvFile: File): Promise<ParsedCsvEntry[]> {
+  return new Promise((resolve, reject): void => {
+    const fileReader = new FileReader()
+    const indexer = useContext(BankContext)
+
+    fileReader.onload = (reader): void => {
+      if (reader.target === null)
+        throw new TypeError(
+          "We failed to read your bank statement for some reason, try downloading it again and then uploading here. We'll wait for you.",
+        )
+      Promise.resolve(reader.target.result)
+        .then((result: string | ArrayBuffer | null) => {
+          if (result === null)
+            throw new TypeError(
+              "We failed to read your bank statement for some reason, try downloading it again and then uploading here. We'll wait for you.",
+            )
+
+          return result.toLocaleString()
+        })
+        .then((statement: string): string[] =>
+          statement.split("\n").slice(indexer.skipLines),
+        )
+        .then((entries: string[]): string[][] =>
+          entries.map((entry: string): string[] => {
+            let openSpeech = false
+            const out: string[] = []
+            let word = ""
+
+            for (
+              let charIndex = 0, max = entry.length;
+              charIndex < max;
+              charIndex += 1
+            ) {
+              if (entry[charIndex] === '"') {
+                openSpeech = !openSpeech
+              }
+
+              if (entry[charIndex] === "," && !openSpeech) {
+                out.push(word)
+                word = ""
+              } else {
+                word += entry[charIndex]
+              }
+            }
+
+            return out
+          }),
+        )
+        .then((probableEntries: string[][]): string[][] =>
+          probableEntries.filter(
+            (entry: string[]): boolean => entry.length > 0,
+          ),
+        )
+        .then((entries: string[][]): string[][] => {
+          if (indexer.balance) {
+            entries.unshift([
+              new Date().toLocaleString(),
+              "OPENING-BALANCE",
+              "OPENING-BALANCE",
+              entries[0][indexer.balance],
+            ])
+          }
+          return entries
+        })
+        .then((entries: string[][]): ParsedEntry[] =>
+          entries.map(
+            (entry: string[]): ParsedEntry => {
+              const baseEntry: ParsedEntry = {
+                date: new Date(entry[indexer.date]),
+                type: entry[indexer.type] as PostType,
+                description: entry[indexer.description],
+                difference: 0,
+              }
+
+              // If the income is 0 then the bank
+              // failed to validate the income at
+              // all so we dont care either way.
+              // we can also assume; safely, this
+              // entry is actually an expenditure.
+              //
+              // also Number("") === 0
+              //   and
+              // isNaN("") === false
+              // in JavaScript.
+              //
+              // also "-1" < 0 === true
+              //   and
+              // "1" > 0 === true
+              //
+              // Cast to any and then cast to number,
+              // this basically tells TypeScript that
+              // "I know what I'm doing, trust me"
+              if (((entry[indexer.income] as any) as number) > 0) {
+                baseEntry.difference = Number(entry[indexer.income])
+              } else if (((entry[indexer.outgoing] as any) as number) < 0) {
+                baseEntry.difference = Number(entry[indexer.outgoing])
+              }
+
+              if (typeof indexer.balance !== "undefined") {
+                baseEntry.balance = Number(entry[indexer.balance])
+              }
+              return baseEntry
+            },
+          ),
+        )
+        .then(resolve)
+        .catch(reject)
+    }
+
+    fileReader.onerror = (error: Error) => reject(error)
+
+    fileReader.readAsText(csvFile)
+  })
+}
