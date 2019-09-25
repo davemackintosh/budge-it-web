@@ -1,5 +1,5 @@
 import React from "react"
-import { RouteProps } from "react-router"
+import { RouteProps, RouteComponentProps } from "react-router"
 import Home from "@src/shared/pages/home"
 import Reports from "@src/shared/pages/reports"
 import Layout from "@src/layout"
@@ -31,10 +31,12 @@ const routes: RouteProps[] = [
   {
     path: "/reports/:report",
     exact: true,
-    render: function ReportsComponentRoute(): JSX.Element {
+    render: function ReportsComponentRoute(
+      props: RouteComponentProps<{ report: string }>,
+    ): JSX.Element {
       return (
         <Layout>
-          <ReportPage />
+          <ReportPage report={props.match.params.report} />
         </Layout>
       )
     },

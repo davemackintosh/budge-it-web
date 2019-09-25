@@ -2,10 +2,11 @@ import React from "react"
 import TotalsReport from "@src/shared/components/reports/totals"
 
 interface ReportPageProps {
-  report?: string
+  report: string
 }
 
 const ReportPage = (props: ReportPageProps): JSX.Element | null => {
+  console.log(props)
   switch (props.report) {
     case "totals":
       return <TotalsReport />

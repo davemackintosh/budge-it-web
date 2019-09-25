@@ -6,7 +6,6 @@ const memoCache: Record<string, any> = {}
  * from a cache.
  *
  * @generic <ReturnType> the return type of the callback.
- * @generic <CallbackSignature> the signature of the callback.
  * @param {Function} callback to wrap.
  * @return {ReturnType}
  */
@@ -22,7 +21,17 @@ export function memo<ReturnType>(callback: Function) {
   }
 }
 
+/**
+ * Normalise a number to 0.0 to 1.0.
+ *
+ * @param {number} value to normalise
+ * @param {number} min - minimum possible value.
+ * @param {number} max - maximum possible value.
+ * @returns {number} normalised number between 0.0 and 1.0
+ */
 export const normalise = memo<number>(
   (value: number, min: number, max: number): number =>
     (value - min) / (max - min),
 )
+
+export function parseCsvFile(csvFile: File) {}
