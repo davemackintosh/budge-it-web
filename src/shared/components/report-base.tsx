@@ -1,7 +1,10 @@
 import React, { Component } from "react"
 import { RouteComponentProps } from "react-router"
+import { ParsedCsvEntry } from "types/csv"
 
-type ReportBaseProps = RouteComponentProps<{ report: string }>
+interface ReportBaseProps extends RouteComponentProps<{ report: string }> {
+  parsedCSV: ParsedCsvEntry[]
+}
 
 class ReportBase extends Component<ReportBaseProps> {
   public renderGraph(): JSX.Element | null {

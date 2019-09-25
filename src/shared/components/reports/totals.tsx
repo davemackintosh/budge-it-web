@@ -1,9 +1,8 @@
-import React from "react"
+import React, { Fragment } from "react"
 import ReportBase from "@src/shared/components/report-base"
 import Graph, {
   GraphComponentProps,
 } from "@src/shared/components/graphs/graph-container"
-import { CSVConsumer } from "@src/shared/contexts/csv"
 import BarGraph from "@src/shared/components/graphs/bar"
 import { withRouter } from "react-router"
 import { ParsedCsvEntry } from "types/csv"
@@ -21,17 +20,15 @@ class TotalsReport extends ReportBase {
 
   renderGraph(): JSX.Element {
     return (
-      <CSVConsumer>
-        {(parsedCSV: ParsedCsvEntry[]): JSX.Element => (
-          <Graph
-            xLabel="Month"
-            yLabel="Amount Spent"
-            data={this.convertCsvDataToGraphData(parsedCSV)}
-          >
-            {(args: GraphComponentProps): JSX.Element => <BarGraph {...args} />}
-          </Graph>
-        )}
-      </CSVConsumer>
+      <Fragment>
+        <Graph
+          xLabel="Month"
+          yLabel="Amount Spent"
+          data={this.convertCsvDataToGraphData(this.context.parsedCSV)}
+        >
+          {(args: GraphComponentProps): JSX.Element => <BarGraph {...args} />}
+        </Graph>
+      </Fragment>
     )
   }
 }

@@ -1,18 +1,24 @@
 import React from "react"
+import { CSVConsumer } from "@src/shared/contexts/csv"
+import { ParsedCsvEntry } from "types/csv"
+import ReportBase from "@src/shared/components/report-base"
 import TotalsReport from "@src/shared/components/reports/totals"
 
 interface ReportPageProps {
   report: string
 }
 
+class Graph404 extends ReportBase {}
+
 const ReportPage = (props: ReportPageProps): JSX.Element | null => {
-  console.log(props)
+  let Graph = Graph404
   switch (props.report) {
     case "totals":
-      return <TotalsReport />
+      Graph = TotalsReport
+      break
   }
 
-  return null
+  return <CSVConsumer>{(parsedCSV: ParsedCsvEntry[]) => <Graph />}</CSVConsumer>
 }
 
 export default ReportPage
