@@ -1,8 +1,7 @@
 import React, { Component } from "react"
-import { RouteComponentProps } from "react-router"
 import { ParsedCsvEntry } from "types/csv"
 
-interface ReportBaseProps extends RouteComponentProps<{ report: string }> {
+export interface ReportBaseProps {
   parsedCSV: ParsedCsvEntry[]
 }
 

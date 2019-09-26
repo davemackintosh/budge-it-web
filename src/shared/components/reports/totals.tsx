@@ -4,7 +4,6 @@ import Graph, {
   GraphComponentProps,
 } from "@src/shared/components/graphs/graph-container"
 import BarGraph from "@src/shared/components/graphs/bar"
-import { withRouter } from "react-router"
 import { ParsedCsvEntry } from "types/csv"
 import { GraphPropsData } from "types/graph"
 
@@ -33,4 +32,4 @@ class TotalsReport extends ReportBase {
   }
 }
 
-export default withRouter(TotalsReport)
+export default TotalsReport
