@@ -1,6 +1,5 @@
 import { ParsedCsvEntry, PostType } from "types/csv"
-import { useContext } from "react"
-import { BankContext } from "@src/shared/contexts/bank"
+import { Indexer } from "types/bank"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const memoCache: Record<string, any> = {}
@@ -49,10 +48,12 @@ export const normalise = memo<number>(
  * @param {File} csvFile to parse.
  * @returns {Promise<ParsedCsvEntry[]> a parsed CSV.
  */
-export async function parseCsvFile(csvFile: File): Promise<ParsedCsvEntry[]> {
+export async function parseCsvFile(
+  csvFile: File,
+  indexer: Indexer,
+): Promise<ParsedCsvEntry[]> {
   return new Promise((resolve, reject): void => {
     const fileReader = new FileReader()
-    const indexer = useContext(BankContext)
 
     fileReader.onload = (reader): void => {
       if (reader.target === null)
