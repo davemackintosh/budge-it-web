@@ -12,6 +12,7 @@
   "author": "davemackintosh",
   "license": "MIT",
   "devDependencies": {
+    "@hot-loader/react-dom": "^16.9.0",
     "@types/jest": "^24.0.18",
     "@types/json-schema": "^7.0.3",
     "@types/node": "^12.7.2",

@@ -1,11 +1,12 @@
-import React, { Fragment } from "react"
+import React from "react"
+import Layout from "@src/layout"
 
 interface Props {
-  children?: JSX.Element[] | null
+  children?: JSX.Element | JSX.Element[] | undefined
 }
 
 function App(props: Props): JSX.Element {
-  return <Fragment>{props.children}</Fragment>
+  return <Layout>{props.children}</Layout>
 }
 
 export default App

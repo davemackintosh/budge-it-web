@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { MainNav } from "@src/shared/theme/nav"
+import { MainNav, MainNavUl, MainNavLi } from "@src/shared/theme/nav"
 import { Link } from "react-router-dom"
 import { ReportsMenu } from "@src/shared/components/reports-menu"
 
@@ -10,16 +10,21 @@ export const NavDrawer = (): JSX.Element => {
 
   return (
     <MainNav>
-      <Link
-        to="/reports"
-        title="See what financial reports we have to offer to better understand your spending"
-        onClick={(): void => setHoverState(true)}
-        onMouseEnter={(): void => setHoverState(true)}
-        onMouseLeave={(): void => setHoverState(false)}
-      >
-        Reports
-        {reportMenu}
-      </Link>
+      <MainNavUl>
+        <MainNavLi
+          onMouseEnter={(): void => setHoverState(true)}
+          onMouseLeave={(): void => setHoverState(false)}
+        >
+          <Link
+            to="/reports"
+            title="See what financial reports we have to offer to better understand your spending"
+            onClick={(): void => setHoverState(true)}
+          >
+            Reports
+          </Link>
+          {reportMenu}
+        </MainNavLi>
+      </MainNavUl>
     </MainNav>
   )
 }

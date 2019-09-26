@@ -9,7 +9,7 @@ export interface AxisProps {
   maxY: number | Date
 }
 
-const Axis = (props: AxisProps) => (
+const Axis = (props: AxisProps): JSX.Element => (
   <Fragment>
     <g className="grid x-grid">
       <line x1="90" x2="90" y1="5" y2="371"></line>

@@ -25,6 +25,10 @@ export const ReportsMenu = (): JSX.Element => {
         Monthly Breakdown
       </Link>,
     )
-  const items = features.map((feature: JSX.Element): JSX.Element => feature)
+  const items = features.map(
+    (feature: JSX.Element): JSX.Element => (
+      <li key={feature.props.to}>{feature}</li>
+    ),
+  )
   return <ReportsMenuUl>{items}</ReportsMenuUl>
 }

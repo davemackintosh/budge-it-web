@@ -1,45 +1,23 @@
-import React from "react"
-import { RouteProps, RouteComponentProps } from "react-router"
+import { RouteProps } from "react-router"
 import Home from "@src/shared/pages/home"
 import Reports from "@src/shared/pages/reports"
-import Layout from "@src/layout"
 import ReportPage from "@src/shared/pages/report"
 
 const routes: RouteProps[] = [
   {
     path: "/",
     exact: true,
-    render: function HomeRoute(): JSX.Element {
-      return (
-        <Layout>
-          <Home />
-        </Layout>
-      )
-    },
+    component: Home,
   },
   {
     path: "/reports",
     exact: true,
-    render: function ReportsRoute(): JSX.Element {
-      return (
-        <Layout>
-          <Reports />
-        </Layout>
-      )
-    },
+    component: Reports,
   },
   {
     path: "/reports/:report",
     exact: true,
-    render: function ReportsComponentRoute(
-      props: RouteComponentProps<{ report: string }>,
-    ): JSX.Element {
-      return (
-        <Layout>
-          <ReportPage report={props.match.params.report} />
-        </Layout>
-      )
-    },
+    component: ReportPage,
   },
 ]
 

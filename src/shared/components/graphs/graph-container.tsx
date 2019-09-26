@@ -16,7 +16,7 @@ interface GraphProps {
   padding?: number
   children: (args: GraphComponentProps) => JSX.Element | JSX.Element[]
   data: GraphPropsData[]
-  SVGProps?: SVGProps<any>
+  SVGProps?: SVGProps<SVGElement>
   xLabel: string
   yLabel: string
 }

@@ -2,7 +2,9 @@ import { ParsedCsvEntry, PostType } from "types/csv"
 import { useContext } from "react"
 import { BankContext } from "@src/shared/contexts/bank"
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const memoCache: Record<string, any> = {}
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 /**
  * memoize a function to speed up it's execution
@@ -14,7 +16,9 @@ const memoCache: Record<string, any> = {}
  * @return {ReturnType}
  */
 export function memo<ReturnType>(callback: Function) {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   return (...args: any[]): ReturnType => {
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     const key = JSON.stringify(args)
 
     if (key in memoCache) return memoCache[key]
@@ -130,11 +134,13 @@ export async function parseCsvFile(csvFile: File): Promise<ParsedCsvEntry[]> {
               // Cast to any and then cast to number,
               // this basically tells TypeScript that
               // "I know what I'm doing, trust me"
+              /* eslint-disable @typescript-eslint/no-explicit-any */
               if (((entry[indexer.income] as any) as number) > 0) {
                 baseEntry.difference = Number(entry[indexer.income])
               } else if (((entry[indexer.outgoing] as any) as number) < 0) {
                 baseEntry.difference = Number(entry[indexer.outgoing])
               }
+              /* eslint-enable @typescript-eslint/no-explicit-any */
 
               if (typeof indexer.balance !== "undefined") {
                 baseEntry.balance = Number(entry[indexer.balance])

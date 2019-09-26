@@ -18,8 +18,9 @@ const app = (
       <BrowserRouter>
         <Fragment>
           <GlobalStyle />
-          <Router routes={routes} />
-          <BaseApp />
+          <BaseApp>
+            <Router routes={routes} />
+          </BaseApp>
         </Fragment>
       </BrowserRouter>
     </IntlProvider>
