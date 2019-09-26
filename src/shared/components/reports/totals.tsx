@@ -23,7 +23,7 @@ class TotalsReport extends ReportBase {
         <Graph
           xLabel="Month"
           yLabel="Amount Spent"
-          data={this.convertCsvDataToGraphData(this.context.parsedCSV)}
+          data={this.convertCsvDataToGraphData(this.props.parsedCSV)}
         >
           {(args: GraphComponentProps): JSX.Element => <BarGraph {...args} />}
         </Graph>

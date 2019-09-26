@@ -11,6 +11,11 @@ export const NavDrawer = (): JSX.Element => {
   return (
     <MainNav>
       <MainNavUl>
+        <MainNavLi>
+          <Link to="/" title="Budge it home page">
+            Home
+          </Link>
+        </MainNavLi>
         <MainNavLi
           onMouseEnter={(): void => setHoverState(true)}
           onMouseLeave={(): void => setHoverState(false)}
