@@ -13,16 +13,36 @@ interface Props {
 interface State {
   parsedCsvFile: ParsedCsvEntry[]
   indexer: Indexer
+  minX: number
+  maxX: number
+  minY: number
+  maxY: number
 }
 
 class App extends Component<Props, State> {
   state = {
     parsedCsvFile: [],
     indexer: natwest,
+    minX: 0,
+    maxX: 0,
+    minY: 0,
+    maxY: 0,
+  }
+
+  private getMinMaxAxis(data: ParsedCsvEntry[]): void {
+    const Ys = data.map((row: ParsedCsvEntry) => row.difference)
+    const Xs = data.map((row: ParsedCsvEntry) => row.date).sort()
+    this.setState({
+      maxY: Math.max(...Ys),
+      minY: Math.min(...Ys),
+      maxX: Math.max(...Xs),
+      minX: Math.min(...Xs),
+    })
   }
 
   private setParsedCsv(parsedCsvFile: ParsedCsvEntry[]): void {
     this.setState({ parsedCsvFile })
+    this.getMinMaxAxis(parsedCsvFile)
   }
 
   private setIndexer(indexer: Indexer): void {
@@ -33,6 +53,10 @@ class App extends Component<Props, State> {
     const csvProviderArgs = {
       setParsedCsv: this.setParsedCsv.bind(this),
       parsedCsvFile: this.state.parsedCsvFile,
+      minX: this.state.minX,
+      maxX: this.state.maxX,
+      minY: this.state.minY,
+      maxY: this.state.maxY,
     }
     const bankProviderArgs = {
       indexer: this.state.indexer,

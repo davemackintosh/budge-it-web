@@ -2,7 +2,11 @@ import React, { Component } from "react"
 import { ParsedCsvEntry } from "types/csv"
 
 export interface ReportBaseProps {
-  parsedCSV: ParsedCsvEntry[]
+  parsedCsvFile: ParsedCsvEntry[]
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
 }
 
 class ReportBase extends Component<ReportBaseProps> {

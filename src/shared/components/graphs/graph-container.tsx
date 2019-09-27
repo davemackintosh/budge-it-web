@@ -19,6 +19,10 @@ interface GraphProps {
   SVGProps?: SVGProps<SVGElement>
   xLabel: string
   yLabel: string
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
 }
 
 interface GraphState {
@@ -27,24 +31,9 @@ interface GraphState {
 }
 
 class Graph extends Component<GraphProps, GraphState> {
-  minX: number
-  maxX: number
-  minY: number
-  maxY: number
-
   state = {
     svgHeight: 0,
     svgWidth: 0,
-  }
-
-  constructor(props: GraphProps) {
-    super(props)
-    const Ys = props.data.map((row: GraphPropsData) => row.y.valueOf())
-    this.maxY = Math.max(...Ys)
-    this.minY = Math.min(...Ys)
-    const Xs = props.data.map((row: GraphPropsData) => row.x.valueOf()).sort()
-    this.maxX = Math.max(...Xs)
-    this.minX = Math.min(...Xs)
   }
 
   private didUpdateSvgHeight = false
@@ -62,23 +51,28 @@ class Graph extends Component<GraphProps, GraphState> {
 
   render(): JSX.Element {
     return (
-      <svg {...this.props.SVGProps} ref={this.setSVGRef.bind(this)}>
+      <svg
+        width="100%"
+        height="600"
+        {...this.props.SVGProps}
+        ref={this.setSVGRef.bind(this)}
+      >
         <Axis
           xLabel={this.props.xLabel}
           yLabel={this.props.yLabel}
-          minX={this.minX}
-          maxX={this.maxX}
-          minY={this.minY}
-          maxY={this.maxY}
+          minX={this.props.minX}
+          maxX={this.props.maxX}
+          minY={this.props.minY}
+          maxY={this.props.maxY}
         />
         {this.props.children({
           svgWidth: this.state.svgWidth,
           svgHeight: this.state.svgHeight,
           data: this.props.data,
-          minY: this.minY,
-          minX: this.minX,
-          maxY: this.maxY,
-          maxX: this.maxX,
+          minY: this.props.minY,
+          minX: this.props.minX,
+          maxY: this.props.maxY,
+          maxX: this.props.maxX,
         })}
       </svg>
     )

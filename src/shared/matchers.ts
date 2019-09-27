@@ -106,7 +106,7 @@ export function MatchersByMonth(entries: ParsedCsvEntry[]) {
       out: OutwardMatchedEntries[],
       entry: ParsedCsvEntry,
     ): OutwardMatchedEntries[] => {
-      const month = entry.date.getMonth()
+      const month = new Date(entry.date).getMonth()
 
       for (const matcher of matchers) {
         if (matcher.matcher.test(entry.description)) {

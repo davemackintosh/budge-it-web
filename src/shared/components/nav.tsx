@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { MainNav, MainNavUl, MainNavLi } from "@src/shared/theme/nav"
 import { Link } from "react-router-dom"
 import { ReportsMenu } from "@src/shared/components/reports-menu"
+import CSVUpload from "@src/shared/components/csv-uploader"
 
 export const NavDrawer = (): JSX.Element => {
   const [reportsMenuHover, setHoverState] = useState(false)
@@ -28,6 +29,9 @@ export const NavDrawer = (): JSX.Element => {
             Reports
           </Link>
           {reportMenu}
+        </MainNavLi>
+        <MainNavLi>
+          <CSVUpload />
         </MainNavLi>
       </MainNavUl>
     </MainNav>

@@ -16,14 +16,14 @@ const BarGraph = (props: BarGraphProps): JSX.Element => {
   return (
     <Fragment>
       {data.map((row, index) => {
-        const height = row.y.valueOf() === maxY ? 100 : (row.y / maxY) * 100
+        const height = row.y === maxY ? 100 : (row.y / maxY) * 100
         const margin = 5
         const width = 100 / data.length - margin
 
         return (
           <BarGraphBar
             className="bar"
-            key={`${row.x.valueOf()}-${row.y}`}
+            key={index}
             x={index * width + margin + "%"}
             y={100 - height + "%"}
             width={width - margin + "%"}

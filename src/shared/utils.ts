@@ -118,7 +118,7 @@ export async function parseCsvFile(
           entries.map(
             (entry: string[]): ParsedCsvEntry => {
               const baseEntry: ParsedCsvEntry = {
-                date: new Date(entry[indexer.date]),
+                date: new Date(entry[indexer.date]).valueOf(),
                 type: entry[indexer.type] as PostType,
                 description: entry[indexer.description],
                 difference: 0,
