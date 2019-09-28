@@ -1,17 +1,15 @@
 import React, { ComponentType, useContext } from "react"
-import ReportBase, { ReportBaseProps } from "@src/shared/components/report-base"
-import TotalsReport from "@src/shared/components/reports/totals"
-import { RouteComponentProps } from "react-router"
+import { RouteComponentProps, useParams } from "react-router"
 import { CSVContext } from "@src/shared/contexts/csv"
+import { Graph404 } from "@src/shared/components/graphs/graph-404"
+import { TotalsReport } from "@src/shared/reports/totals"
 
-type ReportPageProps = RouteComponentProps<{ report: string }>
-
-class Graph404 extends ReportBase {}
-
-const ReportPage = (props: ReportPageProps): JSX.Element | null => {
-  let Report: ComponentType<ReportBaseProps> = Graph404
+const ReportPage = (): JSX.Element => {
+  let Report: ComponentType<{}> = Graph404
   const csv = useContext(CSVContext)
-  switch (props.match.params.report) {
+  const params = useParams<{ report: string }>()
+
+  switch (params.report) {
     case "totals":
       Report = TotalsReport
       break

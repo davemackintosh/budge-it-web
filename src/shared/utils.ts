@@ -1,5 +1,6 @@
 import { ParsedCsvEntry, PostType } from "types/csv"
 import { Indexer } from "types/bank"
+import { GraphPropsData } from "types/graph"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const memoCache: Record<string, any> = {}
@@ -213,3 +214,11 @@ export function money(amount: number): string {
     currency: currencyMap[langValue as keyof typeof currencyMap] || "GBP",
   })
 }
+
+export const csvAsAxisData = memo<GraphPropsData[]>(
+  (parsedCsvFile: ParsedCsvEntry[]): GraphPropsData[] =>
+    parsedCsvFile.map(row => ({
+      x: row.date,
+      y: row.difference,
+    })),
+)
