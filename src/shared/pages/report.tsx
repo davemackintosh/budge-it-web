@@ -1,12 +1,10 @@
-import React, { ComponentType, useContext } from "react"
-import { RouteComponentProps, useParams } from "react-router"
-import { CSVContext } from "@src/shared/contexts/csv"
+import React, { ComponentType } from "react"
+import { useParams } from "react-router"
 import { Graph404 } from "@src/shared/components/graphs/graph-404"
 import { TotalsReport } from "@src/shared/reports/totals"
 
 const ReportPage = (): JSX.Element => {
   let Report: ComponentType<{}> = Graph404
-  const csv = useContext(CSVContext)
   const params = useParams<{ report: string }>()
 
   switch (params.report) {
@@ -15,7 +13,7 @@ const ReportPage = (): JSX.Element => {
       break
   }
 
-  return <Report {...csv} />
+  return <Report />
 }
 
 export default ReportPage

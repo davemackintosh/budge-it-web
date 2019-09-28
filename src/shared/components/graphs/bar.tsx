@@ -1,6 +1,7 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useContext } from "react"
 import { BarGraphBar } from "@src/shared/theme/graphs/bar"
-import { GraphComponentProps } from "@src/shared/components/graphs/graph-container"
+import { CSVContext } from "@src/shared/contexts/csv"
+import { csvAsAxisData } from "@src/shared/utils"
 
 export interface BarGraphPropsData {
   x: number | Date
@@ -8,10 +9,10 @@ export interface BarGraphPropsData {
   label?: string
 }
 
-export type BarGraphProps = GraphComponentProps
-
-const BarGraph = (props: BarGraphProps): JSX.Element => {
-  const { data, maxY } = props
+const BarGraph = (): JSX.Element => {
+  const csvContext = useContext(CSVContext)
+  const data = csvAsAxisData(csvContext.parsedCsvFile)
+  const { maxY } = csvContext
 
   return (
     <Fragment>
@@ -33,11 +34,6 @@ const BarGraph = (props: BarGraphProps): JSX.Element => {
       })}
     </Fragment>
   )
-}
-
-BarGraph.defaultProps = {
-  data: [],
-  barMargin: 5,
 }
 
 export default BarGraph
