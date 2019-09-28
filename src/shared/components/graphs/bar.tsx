@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react"
 import { BarGraphBar } from "@src/shared/theme/graphs/bar"
 import { CSVContext } from "@src/shared/contexts/csv"
-import { csvAsAxisData } from "@src/shared/utils"
+import { csvAsAxisData, normalise } from "@src/shared/utils"
 
 export interface BarGraphPropsData {
   x: number | Date
@@ -12,12 +12,12 @@ export interface BarGraphPropsData {
 const BarGraph = (): JSX.Element => {
   const csvContext = useContext(CSVContext)
   const data = csvAsAxisData(csvContext.parsedCsvFile)
-  const { maxY } = csvContext
+  const { minY, maxY } = csvContext
 
   return (
     <Fragment>
       {data.map((row, index) => {
-        const height = row.y === maxY ? 100 : (row.y / maxY) * 100
+        const height = normalise(row.y, minY, maxY) * 100
         const margin = 5
         const width = 100 / data.length - margin
 

@@ -13,6 +13,8 @@ export function TotalsReport(): JSX.Element {
         minY={csvContext.minY}
         maxY={csvContext.maxY}
         maxX={csvContext.maxX}
+        xLabel="Month"
+        yLabel="Amount"
       >
         <BarGraph />
       </Graph>
