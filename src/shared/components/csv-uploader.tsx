@@ -9,10 +9,10 @@ const CSVUpload = (): JSX.Element => {
   const { setParsedCsv } = useContext(CSVContext)
   const onInputChange = (event: SyntheticEvent<HTMLInputElement>): void => {
     const file = (event.currentTarget.files as FileList)[0]
-    parseCsvFile(file, indexer).then(
-      (parsedCsvFile: ParsedCsvEntry[]) =>
-        setParsedCsv && setParsedCsv(parsedCsvFile),
-    )
+    parseCsvFile(file, indexer).then((parsedCsvFile: ParsedCsvEntry[]) => {
+      console.log(parsedCsvFile)
+      setParsedCsv && setParsedCsv(parsedCsvFile)
+    })
   }
 
   return (

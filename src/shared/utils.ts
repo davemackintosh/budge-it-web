@@ -23,7 +23,7 @@ export function memo<ReturnType>(callback: Function) {
 
     if (key in memoCache) return memoCache[key]
 
-    const valueToCache = callback.call(null, args)
+    const valueToCache = callback(...args)
     memoCache[key] = valueToCache
     return valueToCache
   }
@@ -219,9 +219,11 @@ export function money(amount: number): string {
 }
 
 export const csvAsAxisData = memo<GraphPropsData[]>(
-  (parsedCsvFile: ParsedCsvEntry[]): GraphPropsData[] =>
-    parsedCsvFile.map(row => ({
+  (parsedCsvFile: ParsedCsvEntry[]): GraphPropsData[] => {
+    console.log(parsedCsvFile)
+    return parsedCsvFile.map(row => ({
       x: row.date,
       y: row.difference,
-    })),
+    }))
+  },
 )

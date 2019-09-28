@@ -17,6 +17,7 @@ const BarGraph = (): JSX.Element => {
   return (
     <Fragment>
       {data.map((row, index) => {
+        console.log(row, normalise(row.y, minY, maxY))
         const height = normalise(row.y, minY, maxY) * 100
         const margin = 5
         const width = 100 / data.length - margin

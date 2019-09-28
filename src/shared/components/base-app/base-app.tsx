@@ -32,7 +32,6 @@ class App extends Component<Props, State> {
   private getMinMaxAxis(data: ParsedCsvEntry[]): void {
     const Ys = data.map((row: ParsedCsvEntry) => row.difference)
     const Xs = data.map((row: ParsedCsvEntry) => row.date).sort()
-    console.log(Xs)
     this.setState({
       maxY: Math.max(...Ys),
       minY: Math.min(...Ys),
@@ -42,6 +41,7 @@ class App extends Component<Props, State> {
   }
 
   private setParsedCsv(parsedCsvFile: ParsedCsvEntry[]): void {
+    console.log(parsedCsvFile)
     this.setState({ parsedCsvFile })
     this.getMinMaxAxis(parsedCsvFile)
   }
