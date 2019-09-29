@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react"
 import { BarGraphBar } from "@src/shared/theme/graphs/bar"
 import { CSVContext } from "@src/shared/contexts/csv"
-import { csvAsAxisData, normalise } from "@src/shared/utils"
+import { normalise } from "@src/shared/utils"
 
 export interface BarGraphPropsData {
   x: number | Date
@@ -16,15 +16,31 @@ interface Props {
 
 const BarGraph = (props: Props): JSX.Element => {
   const csvContext = useContext(CSVContext)
-  const data = csvAsAxisData(csvContext.parsedCsvFile)
+  const data = {}
+  const spansMultipleYears = false
   const { minY, maxY } = csvContext
   const margin = 5
-  const width = props.svgWidth - (margin * data.length) / data.length
+  const width =
+    props.svgWidth -
+    (margin * csvContext.parsedCsvFile.length) / csvContext.parsedCsvFile.length
+
+  let yearSelector = null
+
+  if (spansMultipleYears)
+    yearSelector = (
+      <select name="year">
+        {Object.keys(data).map(year => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
+      </select>
+    )
 
   return (
     <Fragment>
+      {yearSelector}
       {data.map((row, index) => {
-        console.log(row, normalise(row.y, minY, maxY))
         const height = props.svgHeight * normalise(row.y, minY, maxY)
 
         return (
