@@ -9,18 +9,23 @@ export interface BarGraphPropsData {
   label?: string
 }
 
-const BarGraph = (): JSX.Element => {
+interface Props {
+  svgWidth: number
+  svgHeight: number
+}
+
+const BarGraph = (props: Props): JSX.Element => {
   const csvContext = useContext(CSVContext)
   const data = csvAsAxisData(csvContext.parsedCsvFile)
   const { minY, maxY } = csvContext
+  const margin = 5
+  const width = props.svgWidth - (margin * data.length) / data.length
 
   return (
     <Fragment>
       {data.map((row, index) => {
         console.log(row, normalise(row.y, minY, maxY))
-        const height = normalise(row.y, minY, maxY) * 100
-        const margin = 5
-        const width = 100 / data.length - margin
+        const height = props.svgHeight * normalise(row.y, minY, maxY)
 
         return (
           <BarGraphBar

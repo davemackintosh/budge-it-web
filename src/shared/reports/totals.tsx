@@ -15,8 +15,11 @@ export function TotalsReport(): JSX.Element {
         maxX={csvContext.maxX}
         xLabel="Month"
         yLabel="Amount"
+        xOrigin="50%"
       >
-        <BarGraph />
+        {(svgWidth: number, svgHeight: number): JSX.Element => (
+          <BarGraph svgWidth={svgWidth} svgHeight={svgHeight} />
+        )}
       </Graph>
     </ReportContainer>
   )

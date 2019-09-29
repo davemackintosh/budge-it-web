@@ -13,15 +13,17 @@ export interface GraphComponentProps {
 }
 
 interface GraphProps {
-  padding?: number
-  children: JSX.Element
-  SVGProps?: SVGProps<SVGElement>
+  children: (svgWidth: number, svgHeight: number) => JSX.Element
   xLabel: string
   yLabel: string
   minX: number
   minY: number
   maxX: number
   maxY: number
+  xOrigin?: string
+  yOrigin?: string
+  padding?: number
+  SVGProps?: SVGProps<SVGElement>
 }
 
 interface GraphState {
@@ -63,8 +65,12 @@ class Graph extends Component<GraphProps, GraphState> {
           maxX={this.props.maxX}
           minY={this.props.minY}
           maxY={this.props.maxY}
+          xOrigin={this.props.xOrigin}
+          yOrigin={this.props.yOrigin}
+          svgWidth={this.state.svgWidth}
+          svgHeight={this.state.svgHeight}
         />
-        {this.props.children}
+        {this.props.children(this.state.svgWidth, this.state.svgHeight)}
       </svg>
     )
   }
